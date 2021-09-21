@@ -1,0 +1,15 @@
+.row{
+    display: flex;
+}
+.myMatrix{
+    position: absolute;
+    top: 10%;
+    left: 30%;
+    border: 10px solid #FFE13BFF;
+}
+.enemyMatrix{
+     position: absolute;
+     top: 10%;
+     left: 60%;
+     border: 10px solid #FFE13BFF;
+ }

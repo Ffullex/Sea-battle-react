@@ -1,6 +1,6 @@
-import './Cell.css';
+import styles from './Cell.css';
 
 // компонент отрисовки пустого поля
 export const Cell = () => {
-    return <div className={'box empty'}> </div>;
+    return <div className={styles['box empty']}> </div>;
 };

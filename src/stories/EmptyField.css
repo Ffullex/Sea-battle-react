@@ -1,9 +1,0 @@
-.row{
-    display: flex;
-}
-.matrix{
-    position: absolute;
-    top: 10%;
-    left: 30%;
-    border: 10px solid #FFE13BFF;
-}
