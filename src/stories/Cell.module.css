@@ -1,8 +1,7 @@
 .box {
-    width: 20px;
-    height: 20px;
-    border: 1px solid #000928;
-    margin: 1px 1px 1px 1px;
-    background-color: #62e5ff;
-    background-size: 20px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000000;
+    margin: 1px;
+    background-color: #61DAFB;
 }

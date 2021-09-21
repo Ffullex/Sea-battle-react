@@ -2,14 +2,10 @@
     display: flex;
 }
 .myMatrix{
-    position: absolute;
-    top: 10%;
-    left: 30%;
-    border: 10px solid #FFE13BFF;
+    float: left;
+    margin-right: 100px;
 }
 .enemyMatrix{
-     position: absolute;
-     top: 10%;
-     left: 60%;
-     border: 10px solid #FFE13BFF;
+    float: right;
+    margin-left: 100px;
  }
