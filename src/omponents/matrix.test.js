@@ -11,5 +11,6 @@ test('battlefield', () => {
                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]];
-  expect(createBattleField).toEqual(battlefield);
+    let testField = createBattleField()
+  expect(battlefield).toEqual(testField);
 })
