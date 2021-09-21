@@ -8,6 +8,8 @@ function App() {
             <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             Learn React
+            <br />
+            SEA BATTLE
             <BattleField />
             </header>
       </div>
