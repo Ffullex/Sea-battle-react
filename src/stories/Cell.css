@@ -1,0 +1,10 @@
+.box {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000928;
+    margin: 1px 1px 1px 1px;
+}
+.empty{
+    background-color: #62e5ff;
+    background-size: 20px;
+}
