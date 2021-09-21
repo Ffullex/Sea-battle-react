@@ -1,4 +1,4 @@
-import { Cell } from './Cell.js';
+import Cell from './Cell.js';
 import styles from './BattleField.module.css';
 import { createBattleField } from "../components/matrix";
 
@@ -13,7 +13,7 @@ export default function BattleField({ matrix, cellField }) {
                 {matrix.map((row, rowIndex) => (
                     <div className={styles["row"]} key={rowIndex}>
                         {row.map((item, itemIndex) => (
-                            <Cell status={ item } key={ itemIndex } />
+                            <Cell status={ item } row={rowIndex} column={itemIndex} key={ itemIndex } />
                         ))}
                     </div>
                 ))}
@@ -22,7 +22,7 @@ export default function BattleField({ matrix, cellField }) {
                 {cellField.map((row, rowIndex) => (
                     <div className={styles["row"]} key={rowIndex}>
                         {row.map((item, itemIndex) => (
-                            <Cell status={ item } key={ itemIndex } />
+                            <Cell status={ item } row={rowIndex} column={itemIndex} key={ itemIndex } />
                         ))}
                     </div>
                 ))}
