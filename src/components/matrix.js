@@ -1,5 +1,3 @@
-
-
 export function createBattleField() {
     let field = [[]];
     for (let i = 0; i < 10; i++) {
@@ -11,4 +9,16 @@ export function createBattleField() {
         }
     }
     return field;
+}
+
+export function disposalShips() {
+    return 0
+}
+
+export function checkLocality() {
+    return 0
+}
+
+export function shoot() {
+    return 0
 }
