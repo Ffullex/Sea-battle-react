@@ -1,4 +1,4 @@
-import { checkLocality, createBattleField, disposalShips, FIELD_SIZE } from "./matrix";
+import {checkLocality, createBattleField, disposalShips, EMPTY_FIELD, FIELD_SIZE, getRandomCell} from "./matrix";
 
 test('battlefield', () => {
     const battlefield = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
@@ -56,6 +56,20 @@ test('checkLocality', () => {
     ];
     expect(checkLocality(passTrue)).toEqual(true);
     expect(checkLocality(passFalse)).toEqual(false);
+})
+
+test('getRandomCell',() => {
+    let flagX = false
+    let flagY = false
+    const coord = getRandomCell()
+    if (0 < coord.newX && coord.newX< 11){
+        flagX = true
+    }
+    if (0 < coord.newX && coord.newX< 11){
+        flagY = true
+    }
+    expect(flagX).toEqual(true)
+    expect(flagY).toEqual(true)
 })
 
 test('shoot', () => {

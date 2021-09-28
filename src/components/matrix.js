@@ -18,13 +18,26 @@ export function createBattleField() {
     return field;
 }
 
+let matrix = createBattleField();
+
 export function disposalShips() {
+    const unoShip = [1, 1, 1, 1];
+    const duoShip = [2, 2, 2];
+    const tresShip = [3, 3];
+    const quartoShip = [4];
+    console.log( unoShip, duoShip, tresShip, quartoShip)
+    if ( getRandomCell(0, EMPTY_FIELD) === EMPTY_FIELD) {
+
+    }
+    // for (let i = 0; i < 10; i++) {
+    //     for (let j = 0; j < 10; j++) {
+    //
+    //     }
+    // }
     return 0
 }
 
 export function checkLocality() {
-    // let matrix = createBattleField()
-    // let battleField = disposalShips(matrix)
     // let countShipCells = 0
     // for (let i = 0; i < 10; i++) {
     //     for (let j = 0; j < 10; j++) {
@@ -48,8 +61,14 @@ export function checkLocality() {
     //             }
     //         }
     //     }
+    return 0
 }
 
+export function getRandomCell() {
+    const newX = Math.ceil(Math.random () * FIELD_SIZE)
+    const newY = Math.ceil(Math.random () * FIELD_SIZE)
+    return {newX, newY}
+}
 export function shoot() {
     return 0
 }
