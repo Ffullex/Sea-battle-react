@@ -18,17 +18,42 @@ export function createBattleField() {
     }
     return field;
 }
-
+let coord = getRandomCoordinate()
 export function disposalShips() {
-    const allShips = []
+    const allShips = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4, 5];
     const unoShip = [1, 1, 1, 1];
     const duoShip = [2, 2, 2];
     const tresShip = [3, 3];
     const quartoShip = [4];
-    console.log( unoShip, duoShip, tresShip, quartoShip)
-    if ( matrix ) {
-        return 0
+    while (allShips !== [5]){
+        console.log( allShips )
+        if ( allShips[0] === SHIP_UNO) {
+            while ( matrix[coord.newX][coord.newY] !== EMPTY_FIELD ) {
+                coord = getRandomCoordinate();
+            }
+            matrix[coord.newX][coord.newY] = SHIP_UNO
+        }
+        if ( allShips[0] === SHIP_DUO) {
+            while ( matrix[coord.newX][coord.newY] !== EMPTY_FIELD ) {
+                coord = getRandomCoordinate();
+            }
+            matrix[coord.newX][coord.newY] = SHIP_DUO
+        }
+        if ( allShips[0] === SHIP_TRES) {
+            while ( matrix[coord.newX][coord.newY] !== EMPTY_FIELD ) {
+                coord = getRandomCoordinate();
+            }
+            matrix[coord.newX][coord.newY] = SHIP_TRES
+        }
+        if ( allShips[0] === SHIP_QUARTO) {
+            while ( matrix[coord.newX][coord.newY] !== EMPTY_FIELD ) {
+                coord = getRandomCoordinate();
+            }
+            matrix[coord.newX][coord.newY] = SHIP_QUARTO
+        }
+        allShips.splice(0,1);
     }
+
     // for (let i = 0; i < 10; i++) {
     //     for (let j = 0; j < 10; j++) {
     //
@@ -64,7 +89,7 @@ export function checkLocality() {
     return 0
 }
 
-export function getRandomCell() {
+export function getRandomCoordinate() {
     const newX = Math.ceil(Math.random () * FIELD_SIZE)
     const newY = Math.ceil(Math.random () * FIELD_SIZE)
     return {newX, newY}

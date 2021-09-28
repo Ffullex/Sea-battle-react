@@ -2,9 +2,8 @@ import {
     checkLocality,
     createBattleField,
     disposalShips,
-    EMPTY_FIELD,
     FIELD_SIZE,
-    getRandomCell,
+    getRandomCoordinate,
     getRandomDirection
 } from "./matrix";
 
@@ -67,14 +66,14 @@ test('checkLocality', () => {
 })
 
 test('getRandomCell',() => {
-    let flagX = false
-    let flagY = false
-    const coord = getRandomCell()
-    if (0 < coord.newX && coord.newX< 11){
-        flagX = true
+    let flagX = false;
+    let flagY = false;
+    const coord = getRandomCoordinate()
+    if (0 < coord.newX && coord.newX < 11){
+        flagX = true;
     }
-    if (0 < coord.newX && coord.newX< 11){
-        flagY = true
+    if (0 < coord.newX && coord.newX < 11){
+        flagY = true;
     }
     expect(flagX).toEqual(true)
     expect(flagY).toEqual(true)
