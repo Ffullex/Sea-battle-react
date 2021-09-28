@@ -4,7 +4,8 @@ export const SHIP_UNO = 1;
 export const SHIP_DUO = 2;
 export const SHIP_TRES = 3;
 export const SHIP_QUARTO = 4;
-
+export const VERTICAL = true;
+export const HORIZONTAL = false;
 export function createBattleField() {
     let field = [[]];
     for (let i = 0; i < FIELD_SIZE; i++) {
@@ -18,16 +19,15 @@ export function createBattleField() {
     return field;
 }
 
-let matrix = createBattleField();
-
 export function disposalShips() {
+    const allShips = []
     const unoShip = [1, 1, 1, 1];
     const duoShip = [2, 2, 2];
     const tresShip = [3, 3];
     const quartoShip = [4];
     console.log( unoShip, duoShip, tresShip, quartoShip)
     if ( matrix ) {
-
+        return 0
     }
     // for (let i = 0; i < 10; i++) {
     //     for (let j = 0; j < 10; j++) {
@@ -72,3 +72,14 @@ export function getRandomCell() {
 export function shoot() {
     return 0
 }
+
+export function getRandomDirection(){
+        if(Math.floor(Math.random() * 2) === 1){
+            return VERTICAL
+        } else {
+            return HORIZONTAL
+        }
+}
+
+let matrix = createBattleField();
+disposalShips(matrix)
