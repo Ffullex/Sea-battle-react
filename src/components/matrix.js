@@ -26,7 +26,7 @@ export function disposalShips() {
     const tresShip = [3, 3];
     const quartoShip = [4];
     console.log( unoShip, duoShip, tresShip, quartoShip)
-    if ( getRandomCell(0, EMPTY_FIELD) === EMPTY_FIELD) {
+    if ( matrix ) {
 
     }
     // for (let i = 0; i < 10; i++) {
