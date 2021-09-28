@@ -1,6 +1,4 @@
-import {checkLocality, createBattleField, disposalShips} from "./matrix";
-import styles from "../stories/BattleField.module.css";
-import Cell from "../stories/Cell";
+import { checkLocality, createBattleField, disposalShips, FIELD_SIZE } from "./matrix";
 
 test('battlefield', () => {
     const battlefield = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
@@ -21,9 +19,9 @@ test('disposalShips', () => {
     let matrix = createBattleField()
     let battleField = disposalShips(matrix)
         let countShipCells = 0
-        for (let i = 0; i < 10; i++) {
-            for (let j = 0; j < 10; j++) {
-                if (battleField[i][j] === 1){
+        for (let i = 0; i < FIELD_SIZE; i++) {
+            for (let j = 0; j < FIELD_SIZE; j++) {
+                if (battleField[i][j] !== 0){
                     countShipCells += 1;
                 }
             }
@@ -32,16 +30,32 @@ test('disposalShips', () => {
 })
 
 test('checkLocality', () => {
-    let matrix = createBattleField()
-    let battleField = disposalShips(matrix)
-    let countShipCells = 0
-    for (let i = 0; i < 10; i++) {
-        for (let j = 0; j < 10; j++) {
-            if (battleField[i][j] === 1){
-                countShipCells += 1;
-            }
-        }
-    }
+    const passTrue = [
+        [0, 4, 0, 0, 0, 0, 0, 0, 0, 0,],
+        [0, 4, 0, 3, 3, 3, 0, 2, 0, 1,],
+        [0, 4, 0, 0, 0, 0, 0, 2, 0, 0,],
+        [0, 4, 0, 3, 3, 3, 0, 0, 0, 1,],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+        [0, 0, 0, 0, 0, 0, 0, 2, 0, 1,],
+        [0, 1, 0, 0, 0, 0, 0, 2, 0, 0,],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+        [0, 0, 0, 0, 0, 0, 0, 2, 2, 0,],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
+    ];
+    const passFalse = [
+        [0, 4, 0, 0, 0, 0, 0, 0, 0, 0,],
+        [0, 4, 0, 0, 1, 0, 2, 2, 0, 0,],
+        [0, 4, 0, 0, 0, 0, 0, 0, 1, 0,],
+        [0, 4, 3, 0, 0, 0, 0, 0, 0, 0,],
+        [0, 0, 3, 0, 0, 0, 0, 0, 2, 0,],
+        [0, 0, 3, 0, 0, 0, 0, 0, 2, 0,],
+        [0, 0, 0, 0, 0, 0, 3, 0, 1, 0,],
+        [0, 0, 0, 0, 0, 0, 3, 0, 0, 0,],
+        [0, 0, 0, 1, 0, 0, 3, 2, 2, 0,],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
+    ];
+    expect(checkLocality(passTrue)).toEqual(true);
+    expect(checkLocality(passFalse)).toEqual(false);
 })
 
 test('shoot', () => {
