@@ -12,4 +12,3 @@ export const Field_Cell = Template.bind({});
 Field_Cell.args = {
     status: 0
 };
-

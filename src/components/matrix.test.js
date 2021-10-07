@@ -3,86 +3,91 @@ import {
     createBattleField,
     disposalShips,
     FIELD_SIZE,
-    getRandomCoordinate,
+    getRandomCoordinates,
     getRandomDirection
-} from "./matrix";
+} from './matrix';
 
-test('battlefield', () => {
-    const battlefield = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
-                         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
-                         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
-                         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
-                         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
-                         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
-                         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
-                         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
-                         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
-                         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]];
-    let testField = createBattleField()
-  expect(battlefield).toEqual(testField);
-})
+test('Создание поля боя, проверка createBattleField', () => {
+    const battlefield = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    let testField = createBattleField();
+    expect(battlefield).toEqual(testField);
+});
 
-test('disposalShips', () => {
-    let matrix = createBattleField()
-    let battleField = disposalShips(matrix)
-        let countShipCells = 0
-        for (let i = 0; i < FIELD_SIZE; i++) {
-            for (let j = 0; j < FIELD_SIZE; j++) {
-                if (battleField[i][j] !== 0){
-                    countShipCells += 1;
-                }
+test('Расположение кораблей, проверка функции disposalShips', () => {
+    let matrix = createBattleField();
+    let battleField = disposalShips(matrix);
+    let countShipCells = 0;
+    for (let i = 0; i < FIELD_SIZE; i++) {
+        for (let j = 0; j < FIELD_SIZE; j++) {
+            if (battleField[i][j] !== 0) {
+                countShipCells += 1;
             }
         }
+    }
     expect(countShipCells).toEqual(20);
-})
+});
 
-test('checkLocality', () => {
-    const passTrue = [
-        [0, 4, 0, 0, 0, 0, 0, 0, 0, 0,],
-        [0, 4, 0, 3, 3, 3, 0, 2, 0, 1,],
-        [0, 4, 0, 0, 0, 0, 0, 2, 0, 0,],
-        [0, 4, 0, 3, 3, 3, 0, 0, 0, 1,],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
-        [0, 0, 0, 0, 0, 0, 0, 2, 0, 1,],
-        [0, 1, 0, 0, 0, 0, 0, 2, 0, 0,],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
-        [0, 0, 0, 0, 0, 0, 0, 2, 2, 0,],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
+test('Исследование окрестностей кораблей, проверка функции checkLocality', () => {
+    const matrix1 = [
+        [0, 4, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 4, 0, 3, 3, 3, 0, 2, 0, 1],
+        [0, 4, 0, 0, 0, 0, 0, 2, 0, 0],
+        [0, 4, 0, 3, 3, 3, 0, 0, 0, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 2, 0, 1],
+        [0, 1, 0, 0, 0, 0, 0, 2, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 2, 2, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
-    const passFalse = [
-        [0, 4, 0, 0, 0, 0, 0, 0, 0, 0,],
-        [0, 4, 0, 0, 1, 0, 2, 2, 0, 0,],
-        [0, 4, 0, 0, 0, 0, 0, 0, 1, 0,],
-        [0, 4, 3, 0, 0, 0, 0, 0, 0, 0,],
-        [0, 0, 3, 0, 0, 0, 0, 0, 2, 0,],
-        [0, 0, 3, 0, 0, 0, 0, 0, 2, 0,],
-        [0, 0, 0, 0, 0, 0, 3, 0, 1, 0,],
-        [0, 0, 0, 0, 0, 0, 3, 0, 0, 0,],
-        [0, 0, 0, 1, 0, 0, 3, 2, 2, 0,],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
+    const matrix2 = [
+        [0, 4, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 4, 0, 0, 1, 0, 2, 2, 0, 0],
+        [0, 4, 0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 4, 3, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 3, 0, 0, 0, 0, 0, 2, 0],
+        [0, 0, 3, 0, 0, 0, 0, 0, 2, 0],
+        [0, 0, 0, 0, 0, 0, 3, 0, 1, 0],
+        [0, 0, 0, 0, 0, 0, 3, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 3, 2, 2, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
-    expect(checkLocality(passTrue)).toEqual(true);
-    expect(checkLocality(passFalse)).toEqual(false);
-})
+    const coordinates1 = { newX: 8, newY: 6 };
+    const coordinates2 = { newX: 1, newY: 2 };
+    const shipLength1 = 2;
+    const shipLength2 = 4;
+    const direction = 4; // down
+    expect(checkLocality(coordinates1, shipLength1, matrix1, direction)).toEqual(true);
+    expect(checkLocality(coordinates2, shipLength2, matrix2, direction)).toEqual(false);
+});
 
-test('getRandomCell',() => {
+test('Получение случайных координат, проверка функции getRandomCoordinate', () => {
     let flagX = false;
     let flagY = false;
-    const coord = getRandomCoordinate()
-    if (0 < coord.newX && coord.newX < 11){
+    const coord = getRandomCoordinates();
+    if (0 < coord.newX && coord.newX < 11) {
         flagX = true;
     }
-    if (0 < coord.newX && coord.newX < 11){
+    if (0 < coord.newX && coord.newX < 11) {
         flagY = true;
     }
-    expect(flagX).toEqual(true)
-    expect(flagY).toEqual(true)
-})
+    expect(flagX).toEqual(true);
+    expect(flagY).toEqual(true);
+});
 
-test('getRandomDirection', () => {
-    expect(getRandomDirection()).toBeTruthy()
-})
+test('Выбор направления, проверка функции getRandomDirection', () => {
+    expect(getRandomDirection()).toBeTruthy();
+});
 
-test('shoot', () => {
-
-})
+test('shoot', () => {});

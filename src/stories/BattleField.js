@@ -1,32 +1,31 @@
 import Cell from './Cell.js';
 import styles from './BattleField.module.css';
-import { createBattleField } from "../components/matrix";
-
+import { createBattleField } from '../components/matrix';
 
 // компонент отрисовки поля
 export default function BattleField({ matrix, cellField }) {
-    matrix = createBattleField()
-    cellField = createBattleField()
+    matrix = createBattleField();
+    cellField = createBattleField();
     return (
-        <div className={styles["gameSurface"]}>
-            <div className={styles["myMatrix"]}>
+        <div className={styles['gameSurface']}>
+            <div className={styles['myMatrix']}>
                 {matrix.map((row, rowIndex) => (
-                    <div className={styles["row"]} key={rowIndex}>
+                    <div className={styles['row']} key={rowIndex}>
                         {row.map((item, itemIndex) => (
-                            <Cell status={ item } row={rowIndex} column={itemIndex} key={ itemIndex } />
+                            <Cell status={item} row={rowIndex} column={itemIndex} key={itemIndex} />
                         ))}
                     </div>
                 ))}
             </div>
-            <div className={styles["enemyMatrix"]}>
+            <div className={styles['enemyMatrix']}>
                 {cellField.map((row, rowIndex) => (
-                    <div className={styles["row"]} key={rowIndex}>
+                    <div className={styles['row']} key={rowIndex}>
                         {row.map((item, itemIndex) => (
-                            <Cell status={ item } row={rowIndex} column={itemIndex} key={ itemIndex } />
+                            <Cell status={item} row={rowIndex} column={itemIndex} key={itemIndex} />
                         ))}
                     </div>
                 ))}
             </div>
         </div>
     );
-};
+}

@@ -1,19 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
-import BattleField from "./stories/BattleField";
+import BattleField from './stories/BattleField';
 
 function App() {
-  return (
-      <div className="App">
+    return (
+        <div className="App">
             <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            Learn React
-            <br />
-            SEA BATTLE
-            <BattleField />
+                <img src={logo} className="App-logo" alt="logo" />
+                Learn React
+                <br />
+                SEA BATTLE
+                <BattleField />
             </header>
-      </div>
-  );
+        </div>
+    );
 }
 
 export default App;

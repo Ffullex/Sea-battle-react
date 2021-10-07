@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBattleField } from '../components/matrix';
-import BattleField from "./BattleField";
+import BattleField from './BattleField';
 
 export default {
     title: 'Example/BattleField',
