@@ -22,6 +22,7 @@ export function createBattleField() {
 export function disposalShips(matrix) {
     const allShips = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
     for (let shipLength of allShips) {
+        // зациклить, чтобы в !checkLocality итерировалось
         const coordinates = getRandomCoordinates();
         const direction = getRandomDirection();
         if (!checkLocality(coordinates, shipLength, matrix, direction)) {
