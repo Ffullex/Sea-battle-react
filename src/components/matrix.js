@@ -27,7 +27,10 @@ export function disposalShips(matrix) {
             const coordinates = getRandomCoordinates();
             const direction = getRandomDirection();
             flag = checkLocality(coordinates, shipLength, matrix, direction);
-        } while (flag);
+            if (flag) {
+                putShip(coordinates, shipLength, matrix, direction);
+            }
+        } while (!flag);
     }
     return 0;
 }
@@ -36,6 +39,9 @@ export function checkLocality(coordinates, shipLength, matrix, direction) {
     return false;
 }
 
+export function putShip(coordinates, shipLength, matrix, direction) {
+    return 0;
+}
 export function getRandomCoordinates() {
     const newX = Math.ceil(Math.random() * FIELD_SIZE);
     const newY = Math.ceil(Math.random() * FIELD_SIZE);
