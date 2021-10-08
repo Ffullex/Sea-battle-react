@@ -1,4 +1,5 @@
 import {
+    checkCell,
     checkLocality,
     createBattleField,
     disposalShips,
@@ -67,7 +68,7 @@ test('Исследование окрестностей кораблей, про
     const coordinates2 = { newX: 1, newY: 2 };
     const shipLength1 = 2;
     const shipLength2 = 4;
-    const direction = 4; // down
+    const direction = { X: 0, Y: -1 }; // down
     expect(checkLocality(coordinates1, shipLength1, matrix1, direction)).toEqual(true);
     expect(checkLocality(coordinates2, shipLength2, matrix2, direction)).toEqual(false);
 });
@@ -87,7 +88,26 @@ test('Получение случайных координат, проверка
 });
 
 test('Выбор направления, проверка функции getRandomDirection', () => {
-    expect(getRandomDirection()).toBeTruthy();
+    const direction = getRandomDirection();
+    expect(typeof direction).toBe('boolean');
+});
+
+test('Проверка функции проверки пустотности ячейки', () => {
+    const matrix = [
+        [4, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [4, 0, 0, 3, 3, 3, 0, 2, 0, 1],
+        [4, 0, 0, 3, 3, 3, 0, 0, 0, 1],
+        [4, 0, 0, 0, 0, 0, 0, 2, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0, 2, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 2, 0, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 2, 2, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    expect(checkCell(matrix, { X: 2, Y: 0 })).toEqual(true);
+    expect(checkCell(matrix, { X: 0, Y: 2 })).toEqual(false);
+    expect(checkCell(matrix, { X: 8, Y: 8 })).toEqual(false);
 });
 
 test('shoot', () => {});

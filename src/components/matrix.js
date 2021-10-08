@@ -28,28 +28,32 @@ export function disposalShips(matrix) {
             const direction = getRandomDirection();
             flag = checkLocality(coordinates, shipLength, matrix, direction);
             if (flag) {
-                putShip(coordinates, shipLength, matrix, direction);
+                matrix = putShip(coordinates, shipLength, matrix, direction);
             }
         } while (!flag);
     }
-    return 0;
+    return matrix;
 }
 
 export function checkLocality(coordinates, shipLength, matrix, direction) {
-    return false;
+    switch (direction) {
+        case HORIZONTAL:
+            const startX = coordinates.newX;
+            return true;
+        case VERTICAL:
+            const startY = coordinates.newY;
+            return true;
+    }
 }
 
 export function putShip(coordinates, shipLength, matrix, direction) {
     return 0;
 }
+
 export function getRandomCoordinates() {
     const newX = Math.ceil(Math.random() * FIELD_SIZE);
     const newY = Math.ceil(Math.random() * FIELD_SIZE);
     return { newX, newY };
-}
-
-export function shoot() {
-    return 0;
 }
 
 export function getRandomDirection() {
@@ -58,4 +62,20 @@ export function getRandomDirection() {
     } else {
         return HORIZONTAL;
     }
+}
+
+export function checkCell(matrix, coordinates) {
+    const y = coordinates.X;
+    const x = coordinates.Y;
+    if (matrix[x][y] === EMPTY_FIELD) {
+        return true;
+    } else if (0 > x || 10 < x || 0 > y || 10 < y) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+export function shoot() {
+    return 0;
 }
