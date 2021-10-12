@@ -8,12 +8,13 @@ export const VERTICAL = true;
 export const HORIZONTAL = false;
 export function createBattleField() {
     let field = [[]];
-    for (let i = 0; i < FIELD_SIZE; i++) {
-        if (field[i] === undefined) {
-            field[i] = [];
+    // i - столбцы, j = строки
+    for (let y = 0; y < FIELD_SIZE; y++) {
+        if (field[y] === undefined) {
+            field[y] = [];
         }
-        for (let j = 0; j < FIELD_SIZE; j++) {
-            field[i][j] = EMPTY_FIELD;
+        for (let x = 0; x < FIELD_SIZE; x++) {
+            field[y][x] = EMPTY_FIELD;
         }
     }
     return field;
@@ -35,13 +36,87 @@ export function disposalShips(matrix) {
     return matrix;
 }
 
+/**
+ * метод проверяет окрестности координат случайной точки, проверяя, можно ли поставить корабль
+ * @param {} coordinates
+ * @param shipLength
+ * @param matrix
+ * @param direction
+ * @returns {boolean}
+ */
 export function checkLocality(coordinates, shipLength, matrix, direction) {
+    const startX = coordinates.newX - 1;
+    const startY = coordinates.newY - 1;
     switch (direction) {
         case HORIZONTAL:
-            const startX = coordinates.newX;
+            for (let i = 0; i < shipLength; i++) {
+                if (0 > startY - 1 || startY - 1 > 10) {
+                    break;
+                }
+                if (!checkCell(matrix, { newY: startY - 1, newX: startX })) {
+                    return false;
+                }
+                if (!checkCell(matrix, { newY: startY - 1, newX: startX + 1 + i })) {
+                    return false;
+                }
+            }
+            for (let i = 0; i < shipLength; i++) {
+                if (!checkCell(matrix, { newY: startY + 1, newX: startX })) {
+                    return false;
+                }
+                if (!checkCell(matrix, { newY: startY + 1, newX: startX + 1 + i })) {
+                    return false;
+                }
+                if (!checkCell(matrix, { newY: startY + 1, newX: startX + 1 + i })) {
+                    return false;
+                }
+            }
+            for (let i = 0; i < shipLength; i++) {
+                if (!checkCell(matrix, { newY: startY + 2, newX: startX })) {
+                    return false;
+                }
+                if (0 > startY + 2 || startY + 1 > 10) {
+                    break;
+                }
+                if (!checkCell(matrix, { newY: startY + 2, newX: startX + i })) {
+                    return false;
+                }
+            }
             return true;
         case VERTICAL:
-            const startY = coordinates.newY;
+            for (let i = 0; i < shipLength; i++) {
+                if (0 > startX || startX + 2 > 10) {
+                    break;
+                }
+                if (!checkCell(matrix, { newY: startY + 1 + i, newX: startX })) {
+                    return false;
+                }
+                if (!checkCell(matrix, { newY: startY + 1 + i, newX: startX })) {
+                    return false;
+                }
+            }
+            for (let i = 0; i < shipLength; i++) {
+                if (!checkCell(matrix[startY + 1 + i][startX + 1])) {
+                    return false;
+                }
+                if (!checkCell(matrix[startY + 1 + i][startX + 1])) {
+                    return false;
+                }
+                if (!checkCell(matrix[startY + 1 + i][startX + 1])) {
+                    return false;
+                }
+            }
+            for (let i = 0; i < shipLength; i++) {
+                if (!checkCell(matrix[startY + 1 + i][startX + 2])) {
+                    return false;
+                }
+                if (0 > startY + 2 || startY + 1 > 10) {
+                    break;
+                }
+                if (!checkCell(matrix[startY + 1 + i][startX + 2])) {
+                    return false;
+                }
+            }
             return true;
     }
 }
@@ -53,7 +128,7 @@ export function putShip(coordinates, shipLength, matrix, direction) {
 export function getRandomCoordinates() {
     const newX = Math.ceil(Math.random() * FIELD_SIZE);
     const newY = Math.ceil(Math.random() * FIELD_SIZE);
-    return { newX, newY };
+    return { newY, newX };
 }
 
 export function getRandomDirection() {
@@ -65,9 +140,9 @@ export function getRandomDirection() {
 }
 
 export function checkCell(matrix, coordinates) {
-    const y = coordinates.X;
-    const x = coordinates.Y;
-    if (matrix[x][y] === EMPTY_FIELD) {
+    const x = coordinates.newX;
+    const y = coordinates.newY;
+    if (matrix[y][x] === EMPTY_FIELD) {
         return true;
     } else if (0 > x || 10 < x || 0 > y || 10 < y) {
         return true;
