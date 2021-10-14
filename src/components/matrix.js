@@ -45,36 +45,31 @@ export function disposalShips(matrix) {
  * @returns {boolean}
  */
 export function checkLocality(coordinates, shipLength, matrix, direction) {
-    const startX = coordinates.newX - 1;
-    const startY = coordinates.newY - 1;
+    const startX = coordinates.newX - 1; // стартовая - 1
+    const startY = coordinates.newY - 1; // стартовая - 1
     switch (direction) {
+        // при горизонтальном направлении проверяет клетки вправо и потом вокруг
         case HORIZONTAL:
-            for (let i = 0; i < shipLength; i++) {
-                if (0 > startY - 1 || startY - 1 > 10) {
+            // проверка над кораблём
+            for (let i = 0; i < shipLength + 1; i++) {
+                //  проверка. Если строка за матрицей, прерываем for.
+                if (10 < startY) {
                     break;
                 }
-                if (!checkCell(matrix, { newY: startY - 1, newX: startX })) {
-                    return false;
-                }
-                if (!checkCell(matrix, { newY: startY - 1, newX: startX + 1 + i })) {
-                    return false;
-                }
-            }
-            for (let i = 0; i < shipLength; i++) {
-                if (!checkCell(matrix, { newY: startY + 1, newX: startX })) {
-                    return false;
-                }
-                if (!checkCell(matrix, { newY: startY + 1, newX: startX + 1 + i })) {
-                    return false;
-                }
-                if (!checkCell(matrix, { newY: startY + 1, newX: startX + 1 + i })) {
+                // проверка верхнего ряда (над кораблём)
+                if (!checkCell(matrix, { newY: startY, newX: startX + i })) {
                     return false;
                 }
             }
-            for (let i = 0; i < shipLength; i++) {
-                if (!checkCell(matrix, { newY: startY + 2, newX: startX })) {
+            // проверка на уровне корабля
+            for (let i = 0; i < shipLength + 1; i++) {
+                if (!checkCell(matrix, { newY: startY + 1, newX: startX + i })) {
                     return false;
                 }
+            }
+            // проверка под уровнем корабля
+            for (let i = 0; i < shipLength; i++) {
+                // проверка. Если за матрицей, то проверять не надо.
                 if (0 > startY + 2 || startY + 1 > 10) {
                     break;
                 }
@@ -84,33 +79,26 @@ export function checkLocality(coordinates, shipLength, matrix, direction) {
             }
             return true;
         case VERTICAL:
-            for (let i = 0; i < shipLength; i++) {
-                if (0 > startX || startX + 2 > 10) {
+            // проверка слева корабля
+            for (let i = 0; i < shipLength + 1; i++) {
+                // если столбик слева за матрицей, прерываем for
+                if (0 > startX) {
                     break;
                 }
-                if (!checkCell(matrix, { newY: startY + 1 + i, newX: startX })) {
-                    return false;
-                }
-                if (!checkCell(matrix, { newY: startY + 1 + i, newX: startX })) {
+                if (!checkCell(matrix, { newY: startY + i, newX: startX })) {
                     return false;
                 }
             }
+            // проверка в столбике корабля
             for (let i = 0; i < shipLength; i++) {
                 if (!checkCell(matrix[startY + 1 + i][startX + 1])) {
                     return false;
                 }
-                if (!checkCell(matrix[startY + 1 + i][startX + 1])) {
-                    return false;
-                }
-                if (!checkCell(matrix[startY + 1 + i][startX + 1])) {
-                    return false;
-                }
             }
+            // проверка справа от корабля
             for (let i = 0; i < shipLength; i++) {
-                if (!checkCell(matrix[startY + 1 + i][startX + 2])) {
-                    return false;
-                }
-                if (0 > startY + 2 || startY + 1 > 10) {
+                // если столбик справа за матрицей, прерываем for
+                if (10 < startX + 2) {
                     break;
                 }
                 if (!checkCell(matrix[startY + 1 + i][startX + 2])) {
