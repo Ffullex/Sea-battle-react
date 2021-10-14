@@ -127,9 +127,9 @@ export function getRandomDirection() {
     }
 }
 
-export function checkCell(matrix, coordinates) {
-    const x = coordinates.newX;
-    const y = coordinates.newY;
+export function checkCell(matrix, { newY: newX, newX: newY }) {
+    const x = newX;
+    const y = newY;
     if (matrix[y][x] === EMPTY_FIELD) {
         return true;
     } else if (0 > x || 10 < x || 0 > y || 10 < y) {

@@ -65,10 +65,10 @@ test('Исследование окрестностей кораблей, про
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
     const coordinates1 = { newY: 8, newX: 6 };
-    const coordinates2 = { newY: 1, newX: 2 };
+    const coordinates2 = { newY: 3, newX: 5 };
     const shipLength1 = 2;
-    const shipLength2 = 4;
-    expect(checkLocality(coordinates1, shipLength1, matrix1, HORIZONTAL)).toBe(true);
+    const shipLength2 = 2;
+    expect(checkLocality(coordinates1, shipLength1, matrix1, HORIZONTAL)).toBe(false);
     expect(checkLocality(coordinates2, shipLength2, matrix2, VERTICAL)).toBe(false);
 });
 
