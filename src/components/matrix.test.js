@@ -1,5 +1,5 @@
 import {
-    checkCell,
+    checkCell, checkCellForNeighbour, checkCellForShip,
     checkLocality,
     createBattleField,
     disposalShips,
@@ -40,7 +40,7 @@ test('Расположение кораблей, проверка функции
 });
 
 test('Исследование окрестностей кораблей, проверка функции checkLocality', () => {
-    const matrix1 = [
+    const matrix = [
         [0, 4, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 4, 0, 3, 3, 3, 0, 2, 0, 1],
         [0, 4, 0, 0, 0, 0, 0, 2, 0, 0],
@@ -52,24 +52,18 @@ test('Исследование окрестностей кораблей, про
         [0, 0, 0, 0, 0, 0, 0, 2, 2, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
-    const matrix2 = [
-        [0, 4, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 4, 0, 0, 1, 0, 2, 2, 0, 0],
-        [0, 4, 0, 0, 0, 0, 0, 0, 1, 0],
-        [0, 4, 3, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 3, 0, 0, 0, 0, 0, 2, 0],
-        [0, 0, 3, 0, 0, 0, 0, 0, 2, 0],
-        [0, 0, 0, 0, 0, 0, 3, 0, 1, 0],
-        [0, 0, 0, 0, 0, 0, 3, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 3, 2, 2, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ];
-    const coordinates1 = { newY: 8, newX: 6 };
-    const coordinates2 = { newY: 3, newX: 5 };
-    const shipLength1 = 2;
-    const shipLength2 = 2;
-    expect(checkLocality(coordinates1, shipLength1, matrix1, HORIZONTAL)).toBe(false);
-    expect(checkLocality(coordinates2, shipLength2, matrix2, VERTICAL)).toBe(false);
+    expect(checkLocality(8, 6, 2, matrix, HORIZONTAL)).toBe(false);
+    expect(checkLocality(3, 5, 2, matrix, VERTICAL)).toBe(true);
+    expect(checkLocality(9, 9, 2, matrix, VERTICAL)).toBe(false);
+
+    expect(checkLocality(-8, 6, 2, matrix, HORIZONTAL)).toBe(false);
+    expect(checkLocality(3, -5, 2, matrix, VERTICAL)).toBe(false);
+    expect(checkLocality(9, 10, 2, matrix, VERTICAL)).toBe(false);
+
+    expect(checkLocality(2, 8, 2, matrix, HORIZONTAL)).toBe(true);
+    expect(checkLocality(5, 4, 2, matrix, VERTICAL)).toBe(false);
+    expect(checkLocality(5, 5, 2, matrix, VERTICAL)).toBe(true);
+    expect(checkLocality(3, 7, 3, matrix, HORIZONTAL)).toBe(true);
 });
 
 test('Получение случайных координат, проверка функции getRandomCoordinate', () => {
@@ -91,7 +85,7 @@ test('Выбор направления, проверка функции getRand
     expect(typeof direction).toBe('boolean');
 });
 
-test('Проверка функции проверки пустотности ячейки', () => {
+test('Проверка функции проверки пустотности ячейки для корабля, checkCellForShip', () => {
     const matrix = [
         [4, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [4, 0, 0, 3, 3, 3, 0, 2, 0, 1],
@@ -104,9 +98,35 @@ test('Проверка функции проверки пустотности я
         [0, 0, 0, 0, 0, 0, 0, 2, 2, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
-    expect(checkCell(matrix, { Y: 2, X: 0 })).toEqual(false);
-    expect(checkCell(matrix, { Y: 0, X: 2 })).toEqual(true);
-    expect(checkCell(matrix, { Y: 8, X: 8 })).toEqual(false);
+    expect(checkCellForShip(matrix, 0, 2)).toEqual(false);
+    expect(checkCellForShip(matrix, 2, 0)).toEqual(true);
+    expect(checkCellForShip(matrix, 8, 8)).toEqual(false);
+    expect(checkCellForShip(matrix, -8, -8)).toEqual(false);
+    expect(checkCellForShip(matrix, 0, -8)).toEqual(false);
+    expect(checkCellForShip(matrix, -8, 0)).toEqual(false);
+    expect(checkCellForShip(matrix, 9, 9)).toEqual(true);
+});
+
+test('Проверка функции проверки пустотности ячейки для корабля, checkCellForNeighbour', () => {
+    const matrix = [
+        [4, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [4, 0, 0, 3, 3, 3, 0, 2, 0, 1],
+        [4, 0, 0, 3, 3, 3, 0, 0, 0, 1],
+        [4, 0, 0, 0, 0, 0, 0, 2, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0, 2, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 2, 0, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 2, 2, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    expect(checkCellForNeighbour(matrix, 0, 2)).toEqual(false);
+    expect(checkCellForNeighbour(matrix, 2, 0)).toEqual(true);
+    expect(checkCellForNeighbour(matrix, 8, 8)).toEqual(false);
+    expect(checkCellForNeighbour(matrix, -8, -8)).toEqual(true);
+    expect(checkCellForNeighbour(matrix, 0, -8)).toEqual(true);
+    expect(checkCellForNeighbour(matrix, -8, 0)).toEqual(true);
+    expect(checkCellForNeighbour(matrix, 9, 9)).toEqual(true);
 });
 
 test('shoot', () => {});
