@@ -1,8 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import BattleField from './stories/BattleField';
+import { disposalShips } from './components/matrix';
 
 function App() {
+    const computerField = disposalShips();
+    const userField = disposalShips();
+    console.table(computerField);
+    console.table(userField);
+
     return (
         <div className="App">
             <header className="App-header">
@@ -10,7 +16,7 @@ function App() {
                 Learn React
                 <br />
                 SEA BATTLE
-                <BattleField />
+                <BattleField computerField={computerField} userField={userField} />
             </header>
         </div>
     );

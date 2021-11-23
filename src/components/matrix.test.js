@@ -26,8 +26,7 @@ test('Создание поля боя, проверка createBattleField', () 
 });
 
 test('Расположение кораблей, проверка функции disposalShips', () => {
-    let matrix = createBattleField();
-    let battleField = disposalShips(matrix);
+    let battleField = disposalShips();
     let countShipCells = 0;
     for (let y = 0; y < FIELD_SIZE; y++) {
         for (let x = 0; x < FIELD_SIZE; x++) {

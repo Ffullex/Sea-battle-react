@@ -1,6 +1,5 @@
 export const FIELD_SIZE = 10;
 export const EMPTY_FIELD = 0;
-export const SHIP_FIELD = 1;
 export const VERTICAL = true;
 export const HORIZONTAL = false;
 
@@ -18,7 +17,8 @@ export function createBattleField() {
     return field;
 }
 
-export function disposalShips(matrix) {
+export function disposalShips() {
+    let matrix = createBattleField();
     const allShips = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
     for (let shipLength of allShips) {
         let success = false;
@@ -32,7 +32,6 @@ export function disposalShips(matrix) {
                 success = true;
             }
         } while (!success);
-        console.table(matrix);
     }
     return matrix;
 }
