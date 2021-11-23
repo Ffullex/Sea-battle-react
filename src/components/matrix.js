@@ -1,11 +1,9 @@
 export const FIELD_SIZE = 10;
 export const EMPTY_FIELD = 0;
-export const SHIP_UNO = 1;
-export const SHIP_DUO = 2;
-export const SHIP_TRES = 3;
-export const SHIP_QUARTO = 4;
+export const SHIP_FIELD = 1;
 export const VERTICAL = true;
 export const HORIZONTAL = false;
+
 export function createBattleField() {
     let field = [[]];
     // i - столбцы, j = строки
@@ -22,16 +20,19 @@ export function createBattleField() {
 
 export function disposalShips(matrix) {
     const allShips = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
-    let flag = false;
     for (let shipLength of allShips) {
+        let success = false;
         do {
             const coordinates = getRandomCoordinates();
+            const x = coordinates.newX;
+            const y = coordinates.newY;
             const direction = getRandomDirection();
-            flag = checkLocality(coordinates, shipLength, matrix, direction);
-            if (flag) {
-                matrix = putShip(coordinates, shipLength, matrix, direction);
+            if (checkLocality(x, y, shipLength, matrix, direction)) {
+                matrix = putShip(x, y, shipLength, matrix, direction);
+                success = true;
             }
-        } while (!flag);
+        } while (!success);
+        console.table(matrix);
     }
     return matrix;
 }
@@ -106,8 +107,32 @@ export function checkLocality(x, y, shipLength, matrix, direction) {
     return true;
 }
 
-export function putShip(coordinates, shipLength, matrix, direction) {
-    return 0;
+// Функция копирует массив
+export function copyField(array) {
+    let newArray = [...array];
+    for (let i = 0; i < newArray.length; i++) {
+        newArray[i] = [...newArray[i]];
+    }
+    return newArray;
+}
+
+export function putShip(x, y, shipLength, matrix, direction) {
+    const putMatrix = copyField(matrix);
+    if (direction === HORIZONTAL) {
+        // при горизонтальном направлении проверяет клетки вправо и потом вокруг
+        // проверить для клеток корабля, что они не заняты и не за краем
+        for (let i = x; i < x + shipLength; i++) {
+            putMatrix[y][i] = shipLength;
+        }
+    }
+    // при вертикальном направлении проверяет клетки вниз и потом всё заверте!
+    if (direction === VERTICAL) {
+        // проверить для клеток корабля, что они не заняты и не за краем
+        for (let i = y; i < y + shipLength; i++) {
+            putMatrix[i][x] = shipLength;
+        }
+    }
+    return putMatrix;
 }
 
 export function getRandomCoordinates() {

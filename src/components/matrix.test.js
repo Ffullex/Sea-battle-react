@@ -1,11 +1,11 @@
 import {
-    checkCell, checkCellForNeighbour, checkCellForShip,
-    checkLocality,
+    checkCellForNeighbour, checkCellForShip,
+    checkLocality, copyField,
     createBattleField,
     disposalShips,
     FIELD_SIZE,
     getRandomCoordinates,
-    getRandomDirection, HORIZONTAL, VERTICAL
+    getRandomDirection, HORIZONTAL, putShip, VERTICAL
 } from './matrix';
 
 test('Создание поля боя, проверка createBattleField', () => {
@@ -127,6 +127,40 @@ test('Проверка функции проверки пустотности я
     expect(checkCellForNeighbour(matrix, 0, -8)).toEqual(true);
     expect(checkCellForNeighbour(matrix, -8, 0)).toEqual(true);
     expect(checkCellForNeighbour(matrix, 9, 9)).toEqual(true);
+});
+
+test('Проверка функции расстановки кораблей, putShip', () => {
+    const matrix = [
+        [4, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [4, 0, 0, 3, 3, 3, 0, 2, 0, 1],
+        [4, 0, 0, 3, 3, 3, 0, 0, 0, 1],
+        [4, 0, 0, 0, 0, 0, 0, 2, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0, 2, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 2, 0, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 2, 2, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    const matrixWithShip = [
+        [4, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [4, 0, 0, 3, 3, 3, 0, 2, 0, 1],
+        [4, 0, 0, 3, 3, 3, 0, 0, 0, 1],
+        [4, 0, 0, 0, 0, 0, 0, 2, 0, 0],
+        [0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 2, 0, 0, 2, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 2, 0, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 2, 2, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    expect(putShip(4, 4, 2, matrix, VERTICAL)).toEqual(matrixWithShip);
+});
+
+test('copyField', () => {
+    const field = createBattleField();
+    expect(copyField(field) === field).toBe(false);
+    expect(copyField(field)[0] === field[0]).toBe(false);
 });
 
 test('shoot', () => {});
